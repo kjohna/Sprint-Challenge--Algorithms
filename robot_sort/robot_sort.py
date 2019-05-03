@@ -96,8 +96,50 @@ class SortingRobot:
         """
         Sort the robot's list.
         """
-        # Fill this out
-        pass
+        # pick up first item
+        self.swap_item()
+        # since robot is initialized at 0 start by moving right, first move is manual
+        self.move_right()
+        # T for right, F for left
+        direction = True
+        # turn on the light, allows us into main loop
+        self.set_light_on()
+        # traverse until we traverse without making a switch, switching directions when we reach the end
+        while self.light_is_on:
+            self.set_light_off()
+            self.traverse(direction)
+            print(self._list)
+            # swap directions after traversing
+            direction = not direction
+            print(direction)
+        # if the light is off we're done!
+
+    def traverse(self, direction):
+        # moves a direction until we can't, swaps items along the way
+        # T for right, F for left
+        if direction:
+            # keep moving, swapping if we can:
+            while self.can_move_right():
+                self.move_right()
+                # swap if item in front is larger
+                if self.compare_item() == -1:
+                    if self.compare_item() != None:
+                        # leave None where it is
+                        self.swap_item()
+                        # turn light on when we make a swap
+                        self.set_light_on()
+        else:
+            # keep moving, swapping if we can:
+            while self.can_move_left():
+                self.move_left()
+                # swap if item in front is smaller
+                if self.compare_item() != None:
+                    # leave None where it is
+                    if self.compare_item() == 1:
+                        self.swap_item()
+                        # turn light on if we make a swap
+                        self.set_light_on()
+        return False
 
 
 if __name__ == "__main__":
