@@ -142,6 +142,8 @@ class SortingRobot:
             self.swap_item()
             self.move_right()
             self.swap_item()
+            # light on in case we moved smallest item from end
+            self.set_light_on()
 
         return
 
