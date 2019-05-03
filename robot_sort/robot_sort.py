@@ -98,8 +98,6 @@ class SortingRobot:
         """
         # pick up first item
         self.swap_item()
-        # since robot is initialized at 0 start by moving right, first move is manual
-        self.move_right()
         # T for right, F for left
         direction = True
         # turn on the light, allows us into main loop
@@ -109,6 +107,7 @@ class SortingRobot:
             self.set_light_off()
             self.traverse(direction)
             print(self._list)
+            print(self._item)
             # swap directions after traversing
             direction = not direction
             print(direction)
@@ -123,23 +122,34 @@ class SortingRobot:
                 self.move_right()
                 # swap if item in front is larger
                 if self.compare_item() == -1:
-                    if self.compare_item() != None:
-                        # leave None where it is
-                        self.swap_item()
-                        # turn light on when we make a swap
-                        self.set_light_on()
+                    self.swap_item()
+                    # turn light on when we make a swap
+                    self.set_light_on()
+            # if we're at the right end, make swap based on item in front smaller
+            if self.compare_item() == 1:
+                self.swap_item()
+                self.set_light_on()
         else:
             # keep moving, swapping if we can:
             while self.can_move_left():
                 self.move_left()
-                # swap if item in front is smaller
+                # leave None where it is until later
                 if self.compare_item() != None:
-                    # leave None where it is
+                    # swap if item in front is smaller
                     if self.compare_item() == 1:
                         self.swap_item()
                         # turn light on if we make a swap
                         self.set_light_on()
-        return False
+                else: 
+                    # if we're holding smallest item, replace none, turn light off
+                    self.move_right
+                    if self.compare_item() == -1:
+                        self.move_left
+                        self.swap_item()
+                        self.set_light_off()
+                        return
+                    self.move_left
+        return
 
 
 if __name__ == "__main__":
