@@ -107,11 +107,18 @@ class SortingRobot:
             self.set_light_off()
             self.traverse(direction)
             print(self._list)
-            print(self._item)
+            print(direction)
+            print(self.light_is_on())
+            # if we're holding smallest item after moving left and no swaps were made, replace none
+            if not direction and not self.light_is_on():
+                print("here")
+                self.move_right()
+                if self.compare_item() == -1:
+                    self.move_left()
+                    self.swap_item()
+                self.move_left()
             # swap directions after traversing
             direction = not direction
-            print(direction)
-        # if the light is off we're done!
 
     def traverse(self, direction):
         # moves a direction until we can't, swaps items along the way
@@ -140,15 +147,20 @@ class SortingRobot:
                         self.swap_item()
                         # turn light on if we make a swap
                         self.set_light_on()
-                else: 
-                    # if we're holding smallest item, replace none, turn light off
-                    self.move_right
-                    if self.compare_item() == -1:
-                        self.move_left
-                        self.swap_item()
-                        self.set_light_off()
-                        return
-                    self.move_left
+                # else: 
+                    # # if we're holding smallest item, replace none, turn light off
+                    # # print("here")
+                    # # print(self._position)
+                    # self.move_right()
+                    # # print(self._position)
+                    # if self.compare_item() == -1:
+                    #     self.move_left()
+                    #     # print(self._position)
+                    #     self.swap_item()
+                    #     # print(self._list)
+                    #     self.set_light_off()
+                    #     return
+                    # self.move_left()
         return
 
 
