@@ -129,6 +129,18 @@ class SortingRobot:
             if self.compare_item() == 1:
                 self.swap_item()
                 self.set_light_on()
+            # check if there are duplicate largest items on the end, move to end of duplicates
+            while self.compare_item() == 0:
+                self.move_left()
+                # swap once we reach the end of duplicates
+                if self.compare_item() == 1:
+                    self.swap_item()
+            # if None is on the left we're done
+            self.move_left()
+            if self.compare_item() == None:
+                self.set_light_off()
+            else:
+                self.move_right()
         else:
             # move left until we reach none, swapping if we can
             while not self.compare_item() == None:
